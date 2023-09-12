@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     discordrb (3.5.0)
       discordrb-webhooks (~> 3.5.0)
       ffi (>= 1.9.24)
@@ -22,11 +24,21 @@ GEM
     netrc (0.11.0)
     opus-ruby (1.0.1)
       ffi
+    rack (3.0.8)
+    redis (5.0.7)
+      redis-client (>= 0.9.0)
+    redis-client (0.17.0)
+      connection_pool
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    sidekiq (7.1.3)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.14.0)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
@@ -36,10 +48,13 @@ GEM
       websocket
 
 PLATFORMS
+  ruby
   x86_64-darwin-21
 
 DEPENDENCIES
   discordrb
+  redis
+  sidekiq
 
 BUNDLED WITH
    2.3.26
