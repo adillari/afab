@@ -33,7 +33,7 @@ rescue StandardError => e
   retry if retries < 3
 end
 
-scheduler.cron("* 8 * * *") do
+scheduler.cron("0 8 * * *") do
   channel = bot.channel(CHANNEL)
   send_apod(channel)
 end
