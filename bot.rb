@@ -16,17 +16,21 @@ bot = Discordrb::Bot.new(token: TOKEN)
 scheduler = Rufus::Scheduler.new
 
 bot.message(with_text: "!apod") do |event|
-  msg_text, embed = APOD.create_embed
-  event.channel.send_embed(msg_text, embed)
-rescue StandardError => e
-  channel.send_message("An error occurred: #{e.message}")
+  channel = event.channel
+  send_apod(channel)
 end
 
 def send_apod(channel)
+  retries ||= 0
+
   msg_text, embed = APOD.create_embed
   channel.send_embed(msg_text, embed)
 rescue StandardError => e
-  channel.send_message("An error occurred: #{e.message}")
+  channel.send_message("An error occurred: #{e.message}\nRetrying...")
+
+  sleep(10)
+  retries += 1
+  retry if retries < 3
 end
 
 scheduler.cron("* 8 * * *") do
