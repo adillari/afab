@@ -7,9 +7,10 @@ require "json"
 require "rufus-scheduler"
 require_relative "modules/apod"
 
-TOKEN = ENV["AFAB_BOT_TOKEN"]
+TOKEN   = ENV["AFAB_BOT_TOKEN"]
 API_KEY = ENV["NASA_APOD_API_KEY"]
 CHANNEL = ENV["APOD_CHANNEL"]
+
 DARK_RED = 0x9b1c16
 
 bot = Discordrb::Bot.new(token: TOKEN)

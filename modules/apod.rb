@@ -8,15 +8,16 @@ module APOD
 
       url = "https://api.nasa.gov/planetary/apod"
       response = Faraday.get(url, api_key: API_KEY)
+
       raise "API request failed" unless response.success?
 
       apod_data = JSON.parse(response.body)
 
-      title = apod_data["title"]
+      title       = apod_data["title"]
       explanation = apod_data["explanation"]
-      type = apod_data["media_type"]
-      copyright = apod_data["copyright"]
-      date = apod_data["date"]
+      type        = apod_data["media_type"]
+      copyright   = apod_data["copyright"]
+      date        = apod_data["date"]
 
       if type == "image"
         image_url = apod_data["url"]
