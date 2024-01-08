@@ -8,7 +8,7 @@ require "rufus-scheduler"
 require_relative "modules/apod"
 
 TOKEN = ENV["AFAB_BOT_TOKEN"]
-NASA_APOD_API_KEY = ENV["NASA_APOD_API_KEY"]
+API_KEY = ENV["NASA_APOD_API_KEY"]
 CHANNEL = ENV["APOD_CHANNEL"]
 DARK_RED = 0x9b1c16
 

@@ -7,7 +7,7 @@ module APOD
       msg_text = ""
 
       url = "https://api.nasa.gov/planetary/apod"
-      response = Faraday.get(url, api_key: NASA_APOD_API_KEY)
+      response = Faraday.get(url, api_key: API_KEY)
       raise "API request failed" unless response.success?
 
       apod_data = JSON.parse(response.body)
