@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module APOD
+  API_KEY = ENV["NASA_APOD_API_KEY"]
+  DARK_RED = 0x9b1c16
+
   class << self
     def create_embed
       embed = Discordrb::Webhooks::Embed.new
