@@ -2,8 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    base64 (0.2.0)
     concurrent-ruby (1.2.2)
-    date (3.3.4)
     discordrb (3.5.0)
       discordrb-webhooks (~> 3.5.0)
       ffi (>= 1.9.24)
@@ -16,6 +16,11 @@ GEM
     et-orbi (1.2.7)
       tzinfo
     event_emitter (0.2.6)
+    faraday (2.8.1)
+      base64
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
     ffi (1.16.3)
     fugit (1.9.0)
       et-orbi (~> 1, >= 1.2.7)
@@ -29,10 +34,6 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.1205)
     netrc (0.11.0)
-    open-uri (0.4.1)
-      stringio
-      time
-      uri
     opus-ruby (1.0.1)
       ffi
     parallel (1.24.0)
@@ -65,15 +66,12 @@ GEM
     rubocop-shopify (2.14.0)
       rubocop (~> 1.51)
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     rufus-scheduler (3.9.1)
       fugit (~> 1.1, >= 1.1.6)
-    stringio (3.1.0)
-    time (0.3.0)
-      date
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
-    uri (0.13.0)
     websocket (1.2.10)
     websocket-client-simple (0.8.0)
       event_emitter
@@ -81,14 +79,14 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
-  discordrb
-  json
-  open-uri
+  discordrb (~> 3.5)
+  faraday (~> 2.8)
   rubocop (~> 1.59)
   rubocop-shopify (~> 2.14)
-  rufus-scheduler
+  rufus-scheduler (~> 3.9)
 
 RUBY VERSION
    ruby 3.2.2p53
