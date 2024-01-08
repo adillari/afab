@@ -38,5 +38,6 @@ scheduler.cron("0 8 * * *") do
   send_apod(channel)
 end
 
+at_exit { bot.stop }
 bot.run
 scheduler.join
