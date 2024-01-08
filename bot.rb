@@ -2,7 +2,7 @@
 
 require "bundler/setup"
 require "discordrb"
-require "open-uri"
+require "faraday"
 require "json"
 require "rufus-scheduler"
 require_relative "modules/apod"

@@ -6,9 +6,11 @@ module APOD
       embed = Discordrb::Webhooks::Embed.new
       msg_text = ""
 
-      url = "https://api.nasa.gov/planetary/apod?api_key=#{NASA_APOD_API_KEY}"
-      response = URI.open(url).read
-      apod_data = JSON.parse(response)
+      url = "https://api.nasa.gov/planetary/apod"
+      response = Faraday.get(url, api_key: NASA_APOD_API_KEY)
+
+      raise "API request failed" unless response.success?
+      apod_data = JSON.parse(response.body)
 
       title = apod_data["title"]
       explanation = apod_data["explanation"]
