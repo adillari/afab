@@ -1,24 +1,53 @@
 # frozen_string_literal: true
 
-require "uri"
-require "cgi"
-
 module LinkCleaner
   TRACKER_PARAMS = [
-    'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
-    'gclid', 'fbclid', 'si', 's', 'fbid',
-    'trk', 'source', "ei", "iflsig", "ved", "uact", "oq", "gs_lp", "sclient", 
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+    "gclid",
+    "fbclid",
+    "si",
+    "s",
+    "fbid",
+    "trk",
+    "source",
+    "ei",
+    "iflsig",
+    "ved",
+    "uact",
+    "oq",
+    "gs_lp",
+    "sclient",
   ]
 
   class << self
-    def has_tracker?(link)
-      uri = URI.parse(link)
-      query_params = CGI.parse(uri.query || '')
-      (query_params.keys & TRACKER_PARAMS).any?
+    def clean_uris(uris)
+      uris.filter! { |uri| has_tracker?(uri) }
+      uris.tap { |uri| clean(uri) }
     end
 
-    def clean(link)
+    private
 
+    def has_tracker?(uri)
+      query_params = CGI.parse(uri.query || "")
+      return true if twitter?(uri) && query_params.keys.include?("t")
+
+      query_params.keys.intersect?(TRACKER_PARAMS)
+    end
+
+    def clean(uri)
+      query_params = CGI.parse(uri.query || "")
+      query_params.delete("t") if twitter?(uri)
+      TRACKER_PARAMS.each { |param| query_params.delete(param) }
+      uri.query = URI.encode_www_form(query_params)
+      uri.to_s
+    end
+
+    def twitter?(uri)
+      ["twitter.com", "t.co", "x.com"].include?(uri.host.downcase)
     end
   end
 end

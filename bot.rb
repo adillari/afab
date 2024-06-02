@@ -4,6 +4,8 @@ require "bundler/setup"
 require "discordrb"
 require "faraday"
 require "json"
+require "uri"
+require "cgi"
 require "rufus-scheduler"
 require_relative "modules/apod"
 require_relative "modules/link_cleaner"
@@ -15,10 +17,9 @@ bot = Discordrb::Bot.new(token: TOKEN)
 scheduler = Rufus::Scheduler.new
 
 bot.message(contains: "http") do |event|
-  urls = event.message.content.scan(%r{https?://\S+})
-  urls.filter! { |url| LinkCleaner::has_tracker?(url) }
-  urls.tap { |url| LinkCleaner::clean(url) }
-  urls.each { event.message.reply(url) }
+  uris = event.message.content.scan(%r{https?://\S+}).map { |link| URI.parse(link) }
+  cleaned_uris = LinkCleaner.clean_uris(uris)
+  cleaned_uris.each { event.message.reply(uri) }
 end
 
 bot.message(with_text: "!apod") do |event|
