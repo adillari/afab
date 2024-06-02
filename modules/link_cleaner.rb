@@ -26,7 +26,7 @@ module LinkCleaner
   class << self
     def clean_uris(uris)
       uris.filter! { |uri| has_tracker?(uri) }
-      uris.tap { |uri| clean(uri) }
+      uris.each.tap { |uri| clean(uri) }
     end
 
     private
