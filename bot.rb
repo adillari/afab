@@ -31,7 +31,8 @@ def send_apod(channel)
   retries ||= 0
 
   msg_text, embed = APOD.create_embed
-  channel.send_embed(msg_text, embed)
+  channel.send_message(msg_text) unless msg_text == ""
+  channel.send_embed("", embed)
 rescue StandardError => e
   channel.send_message("An error occurred: #{e.message}\nRetrying...")
 
