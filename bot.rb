@@ -19,7 +19,7 @@ scheduler = Rufus::Scheduler.new
 bot.message(contains: "http") do |event|
   uris = event.message.content.scan(%r{https?://\S+}).map { |link| URI.parse(link) }
   cleaned_uris = LinkCleaner.clean_uris(uris)
-  cleaned_uris.each { event.message.reply(uri) }
+  cleaned_uris.each { |uri| event.message.reply(uri) }
 end
 
 bot.message(with_text: "!apod") do |event|
