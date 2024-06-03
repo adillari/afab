@@ -21,7 +21,7 @@ bot.message(contains: "http") do |event|
   uris = event.message.content.scan(%r{https?://\S+}).map { |link| URI.parse(link) }
   cleaned_uris = LinkCleaner.clean_uris(uris)
   cleaned_uris.each do |uri|
-    event.channel.send_message(uri, false, nil, nil, nil, event.message)
+    event.channel.send_message("Removed trackers from link:\n#{uri}", false, nil, nil, nil, event.message)
   end
 end
 
