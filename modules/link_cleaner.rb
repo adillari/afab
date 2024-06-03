@@ -7,6 +7,7 @@ module LinkCleaner
     "utm_campaign",
     "utm_term",
     "utm_content",
+    "igsh",
     "gclid",
     "fbclid",
     "si",
