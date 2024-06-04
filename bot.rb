@@ -17,7 +17,8 @@ bot = Discordrb::Bot.new(token: TOKEN)
 scheduler = Rufus::Scheduler.new
 
 bot.message(contains: "http") do |event|
-  return if event.message.from_bot?
+  next if event.message.from_bot?
+
   uris = event.message.content.scan(%r{https?://\S+}).map { |link| URI.parse(link) }
   cleaned_uris = LinkCleaner.clean_uris(uris)
   cleaned_uris.each do |uri|
