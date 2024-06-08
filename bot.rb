@@ -21,10 +21,10 @@ bot.message(contains: "http") do |event|
   next if event.message.from_bot?
 
   uris = event.message.content.scan(LINK_REGEX).map { |link| URI.parse(link) }
-  if uris.filter { |uri| LinkCleaner.has_tracker?(uri) }.any?
+  if uris.any? { |uri| LinkCleaner.has_tracker?(uri) }
     cleaned_uris = LinkCleaner.clean_uris(uris).to_enum
     cleaned_message = event.message.content.gsub(LINK_REGEX) { cleaned_uris.next }
-    event.channel.send_message("> [Links Cleaned] Sent by <@#{event.message.user.id}>\n\n#{cleaned_message}")
+    event.channel.send_message("> [ Links Cleaned ] Sent by <@#{event.message.user.id}>\n#{cleaned_message}")
   end
 end
 
