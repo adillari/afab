@@ -12,6 +12,7 @@ require_relative "modules/link_cleaner"
 
 TOKEN = ENV["AFAB_BOT_TOKEN"]
 CHANNEL = ENV["APOD_CHANNEL"]
+LINK_REGEX = %r{https?://\S+}
 
 bot = Discordrb::Bot.new(token: TOKEN)
 scheduler = Rufus::Scheduler.new
@@ -19,10 +20,11 @@ scheduler = Rufus::Scheduler.new
 bot.message(contains: "http") do |event|
   next if event.message.from_bot?
 
-  uris = event.message.content.scan(%r{https?://\S+}).map { |link| URI.parse(link) }
-  cleaned_uris = LinkCleaner.clean_uris(uris)
-  cleaned_uris.each do |uri|
-    event.channel.send_message("Removed trackers from link:\n#{uri}", false, nil, nil, nil, event.message)
+  uris = event.message.content.scan(LINK_REGEX).map { |link| URI.parse(link) }
+  if uris.filter { |uri| LinkCleaner.has_tracker(uri) }.any?
+    cleaned_uris = LinkCleaner.clean_uris(uris).to_enum
+    cleaned_message = event.message.content.gsub(link_regex) { cleaned_uris.next }
+    event.channel.send_message(cleaned_message)
   end
 end
 

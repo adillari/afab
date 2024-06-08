@@ -26,11 +26,9 @@ module LinkCleaner
 
   class << self
     def clean_uris(uris)
-      uris.filter! { |uri| has_tracker?(uri) }
+      # uris.filter! { |uri| has_tracker?(uri) }
       uris.map { |uri| clean(uri) }
     end
-
-    private
 
     def has_tracker?(uri)
       query_params = CGI.parse(uri.query || "")
@@ -38,6 +36,8 @@ module LinkCleaner
 
       query_params.keys.intersect?(TRACKER_PARAMS)
     end
+
+    private
 
     def clean(uri)
       query_params = CGI.parse(uri.query || "")
