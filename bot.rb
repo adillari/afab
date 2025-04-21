@@ -40,6 +40,7 @@ def send_apod(channel)
   retries ||= 0
 
   msg_text, embed = APOD.create_embed
+  channel.send_message(msg_text) unless msg_text.nil? || msg_text == ""
   channel.send_message(msg_text) if msg_text
   channel.send_embed("", embed)
 rescue StandardError => e
