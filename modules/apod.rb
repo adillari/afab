@@ -30,7 +30,16 @@ module APOD
 
       embed = Discordrb::Webhooks::Embed.new
       embed.title = title
-      embed.image = Discordrb::Webhooks::EmbedImage.new(url: image_url) if type == "image"
+      if type == "image"
+        filename = "#{Time.now.to_s.split.first}.#{image_url.split(".").last}"
+        filepath = "/var/www/assets/#{filename}"
+
+        URI.open(URI.parse(image_url)) do |image|
+          File.open(filepath, "wb") { |file| file.write(image.read) }
+        end
+
+        embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https://assets.maz.dev/#{filename}")
+      end
       embed.description = explanation
       embed.color = DARK_RED
       embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: footer)

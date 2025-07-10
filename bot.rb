@@ -5,6 +5,7 @@ require "discordrb"
 require "faraday"
 require "json"
 require "uri"
+require "open-uri"
 require "cgi"
 require "rufus-scheduler"
 require_relative "modules/apod"
@@ -41,7 +42,6 @@ def send_apod(channel)
 
   msg_text, embed = APOD.create_embed
   channel.send_message(msg_text) unless msg_text.nil? || msg_text == ""
-  channel.send_message(msg_text) if msg_text
   channel.send_embed("", embed)
 rescue StandardError => e
   channel.send_message("An error occurred: #{e.message}\nRetrying...")
