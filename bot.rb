@@ -37,6 +37,10 @@ bot.message(with_text: "!apod") do |event|
   send_apod(channel)
 end
 
+bot.message(with_text: "!apod_raw") do |event|
+  event.channel.send_message("`#{pp(APOD.json)}`")
+end
+
 def send_apod(channel)
   retries ||= 0
 

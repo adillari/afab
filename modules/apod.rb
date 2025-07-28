@@ -5,13 +5,17 @@ module APOD
   DARK_RED = 0x9b1c16
 
   class << self
-    def create_embed
+    def json
       url = "https://api.nasa.gov/planetary/apod"
       response = Faraday.get(url, api_key: API_KEY)
 
       raise "API request failed" unless response.success?
 
-      apod_data = JSON.parse(response.body)
+      JSON.parse(response.body)
+    end
+
+    def create_embed
+      apod_data = json
 
       title       = apod_data["title"]
       explanation = apod_data["explanation"]
