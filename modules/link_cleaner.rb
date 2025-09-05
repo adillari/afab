@@ -22,6 +22,9 @@ module LinkCleaner
     "oq",
     "gs_lp",
     "sclient",
+    "emailIdentifier",
+    "edition",
+    "token",
   ]
 
   class << self
