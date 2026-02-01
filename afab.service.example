@@ -1,0 +1,14 @@
+[Unit]
+Description=AFAB Discord Bot
+After=network.target
+
+[Service]
+User=username
+WorkingDirectory=/path/to/afab
+EnvironmentFile=/path/to/afab/.env
+ExecStart=/bin/bash -lc 'eval "$(~/.rbenv/bin/rbenv init - bash)"; bundle exec ruby bot.rb'
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
