@@ -35,6 +35,7 @@ module APOD
       embed = Discordrb::Webhooks::Embed.new
       embed.title = title
       if type == "image"
+        =begin
         filename = "#{Time.now.to_s.split.first}.#{image_url.split(".").last}"
         filepath = "/var/www/assets/#{filename}"
 
@@ -43,6 +44,8 @@ module APOD
         end
 
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https://assets.maz.dev/#{filename}")
+        =end
+        embed.image = Discordrb::Webhooks::EmbedImage.new(url: image_url)
       end
       embed.description = explanation
       embed.color = DARK_RED
