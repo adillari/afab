@@ -35,16 +35,14 @@ module APOD
       embed = Discordrb::Webhooks::Embed.new
       embed.title = title
       if type == "image"
-        =begin
-        filename = "#{Time.now.to_s.split.first}.#{image_url.split(".").last}"
-        filepath = "/var/www/assets/#{filename}"
+        # filename = "#{Time.now.to_s.split.first}.#{image_url.split(".").last}"
+        # filepath = "/var/www/assets/#{filename}"
 
-        URI.open(URI.parse(image_url)) do |image|
-          File.open(filepath, "wb") { |file| file.write(image.read) }
-        end
+        # URI.open(URI.parse(image_url)) do |image|
+        #   File.open(filepath, "wb") { |file| file.write(image.read) }
+        # end
 
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https://assets.maz.dev/#{filename}")
-        =end
+        # embed.image = Discordrb::Webhooks::EmbedImage.new(url: "https://assets.maz.dev/#{filename}")
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: image_url)
       end
       embed.description = explanation
