@@ -11,6 +11,7 @@ module LinkCleaner
     "gclid",
     "fbclid",
     "si",
+    "is",
     "s",
     "fbid",
     "trk",
